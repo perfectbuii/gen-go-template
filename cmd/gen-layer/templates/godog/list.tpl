@@ -10,4 +10,8 @@ func (s*Suite) returnsStatusCode(arg1 string) error {
 func (s*Suite) userList{{.PascalCase}}() error {
        return godog.ErrPending
 }
+
+func (s*Suite) ourSystemMustReturnResultCorrectly() error {
+    return godog.ErrPending
+}
 {{end}}

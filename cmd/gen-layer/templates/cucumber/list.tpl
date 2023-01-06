@@ -18,5 +18,5 @@
     Scenario: list {{.CamelCase}}
         When user list {{.CamelCase}}
         Then returns "OK" status code
-        And our system must return results correctly
+        And our system must return result correctly
 {{end}}
