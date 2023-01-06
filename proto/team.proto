@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package team;
+option go_package = "pb/;pb";
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "enum.proto";
+import "options/annotations.proto";
+
+// // Go package name which contains business logic structures.
+option (transformer.go_repo_package) = "models";
+// // Go package name with protobuf generated srtuctures. Could be equal to
+// // options go_package.
+option (transformer.go_protobuf_package) = "pb";
+// // Path to source file with Go structures which will be used asdestination.
+option (transformer.go_models_file_path) = "internal/models/models.go";
+
+service TeamService {
+  rpc GetTeamByID(GetTeamByIDRequest) returns (GetTeamByIDResponse) {
+    option (google.api.http) = {
+      get : "/v1/teams/{teamID}"
+    };
+  };
+
+  rpc CreateTeam(CreateTeamRequest) returns (CreateTeamResponse) {
+    option (google.api.http) = {
+      post : "/v1/teams",
+      body : "*"
+    };
+  };
+
+  rpc GetList(GetListTeamRequest) returns (GetListTeamResponse) {
+    option (google.api.http) = {
+      get : "/v1/teams"
+    };
+  };
+
+  rpc UpdateTeam(UpdateTeamRequest) returns (UpdateTeamResponse) {
+    option (google.api.http) = {
+      put : "/v1/teams",
+      body : "*"
+    };
+  };
+}
+
+message GetTeamByIDRequest { string teamID = 1; }
+
+message GetTeamByIDResponse { Team data = 1; }
+
+message Team {
+  option (transformer.go_struct) = "Team";
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  string location_id = 4;
+  string hub_id = 5;
+}
+
+message CreateTeamRequest {
+  Team team = 1;
+}
+
+message CreateTeamResponse { bool success = 1; }
+
+message GetListTeamRequest {
+  int32 offset = 1;
+  int32 limit = 2;
+}
+
+message GetListTeamResponse {
+  repeated Team data = 1;
+  int32 total = 2;
+}
+
+message UpdateTeamRequest { Team team = 1; }
+
+message UpdateTeamResponse { bool success = 1; }
