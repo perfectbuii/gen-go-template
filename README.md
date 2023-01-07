@@ -295,7 +295,7 @@ You run:
 <pre><i><a href="https://rednafi.github.io/reflections" target="_blank">make start-project</a></i></pre>
 </h2>
 
-After that check my integration test to know flow of prj:
+After that check my integration test:
 
 <h2 align="center">
 <pre><i><a href="https://rednafi.github.io/reflections" target="_blank">make bdd-test</a></i></pre>
