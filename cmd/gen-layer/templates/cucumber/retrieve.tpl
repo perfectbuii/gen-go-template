@@ -18,7 +18,7 @@
     Scenario: retrieve {{.CamelCase}}
         When user retrieve {{.CamelCase}}
         Then returns "OK" status code
-        And our system must return {{.CamelCase}} result correctly
+        And our system must return {{.CamelCase}} correctly
 	
 	# retrieve invalid {{.CamelCase}}
     Scenario: retrieve invalid {{.CamelCase}}
