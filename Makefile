@@ -25,7 +25,7 @@ gen-layer:
 gen-mock:
 	docker compose -f ${COMPOSE_FILE} up generate_mock
 bdd-test:
-	go test -v ./features
+	go test -v ./integration_test
 build:
 	@echo "building..."
 	go build ./cmd/srv/.

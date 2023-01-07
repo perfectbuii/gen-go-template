@@ -13,5 +13,6 @@ func (s*Suite) {{.CamelCase}}MustBeCreated(ctx context.Context) (context.Context
 
 func (s*Suite) userCreate{{.PascalCase}}(ctx context.Context) (context.Context, error) {
        stepState := StepStateFromContext(ctx)
-       return StepStateToContext(ctx, stepState), godog.ErrPending}
+       return StepStateToContext(ctx, stepState), godog.ErrPending
+}
 {{end}}

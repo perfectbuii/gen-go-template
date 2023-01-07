@@ -54,13 +54,16 @@ func (s *Suite) GetSteps() map[string]interface{} {
 		// example:
 		// `^there are (\d+) godogs$`: s.thereAreGodogs,
 
-		`^a signed in "([^"]*)"$`:                   s.aSignedIn,
-		`^a background$`:                            s.aBackground,
-		`^user create hub$`:                         s.userCreateHub,
-		`^returns "([^"]*)" status code$`:           s.returnsStatusCode,
-		`^hub must be created$`:                     s.hubMustBeCreated,
-		`^user search hub$`:                         s.userSearchHub,
-		`^our system must return result correctly$`: s.ourSystemMustReturnResultCorrectly,
+		`^a signed in "([^"]*)"$`:                s.aSignedIn,
+		`^a background$`:                         s.aBackground,
+		`^user create hub$`:                      s.userCreateHub,
+		`^returns "([^"]*)" status code$`:        s.returnsStatusCode,
+		`^hub must be created$`:                  s.hubMustBeCreated,
+		`^user search hub$`:                      s.userSearchHub,
+		`^our system must return hub correctly$`: s.ourSystemMustReturnHubCorrectly,
+		`^user create team$`:                     s.userCreateTeam,
+		`^team must be created$`:                 s.teamMustBeCreated,
+
 		/*generate_key*/
 	}
 }

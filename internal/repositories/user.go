@@ -15,18 +15,17 @@ type UserRepository interface {
 }
 
 type userRepository struct {
-	db models.DBTX
+	db *models.Queries
 }
 
 func NewUserRepository(db models.DBTX) UserRepository {
 	return &userRepository{
-		db,
+		db: models.New(db),
 	}
 }
 
 func (u *userRepository) Create(ctx context.Context, user *models.User) error {
-	q := models.New(u.db)
-	if _, err := q.CreateUser(ctx, models.CreateUserParams{
+	if _, err := u.db.CreateUser(ctx, models.CreateUserParams{
 		ID:     user.ID,
 		Name:   user.Name,
 		Type:   user.Type,

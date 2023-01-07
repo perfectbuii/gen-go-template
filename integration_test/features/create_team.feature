@@ -1,22 +1,21 @@
-{{define "list"}}Feature: list {{.CamelCase}}
+Feature: Create team
 
     Background: basic background
         Given a signed in "admin"
         And a background
 
 	# authenticate
-    Scenario Outline: authenticate when list {{.CamelCase}}
+    Scenario Outline: authenticate when create team
         Given a signed in "<role>"
-        When user list {{.CamelCase}}
+        When user create team
         Then returns "<status code>" status code
 
         Examples:
             | role           | status code |
             | admin          |             |
 
-	# list {{.CamelCase}}
-    Scenario: list {{.CamelCase}}
-        When user list {{.CamelCase}}
+	# create team
+    Scenario: create team
+        When user create team
         Then returns "OK" status code
-        And our system must return {{.CamelCase}} correctly
-{{end}}
+        And team must be created

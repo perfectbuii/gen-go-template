@@ -11,7 +11,7 @@ func (s*Suite) userList{{.PascalCase}}(ctx context.Context) (context.Context, er
        return StepStateToContext(ctx, stepState), godog.ErrPending
 }
 
-func (s*Suite) ourSystemMustReturnResultCorrectly(ctx context.Context) (context.Context, error) {
+func (s*Suite) ourSystemMustReturn{{.PascalCase}}Correctly(ctx context.Context) (context.Context, error) {
        stepState := StepStateFromContext(ctx)
        return StepStateToContext(ctx, stepState), godog.ErrPending
 }

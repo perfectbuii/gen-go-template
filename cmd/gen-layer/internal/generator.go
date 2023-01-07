@@ -12,7 +12,7 @@ import (
 
 	"github.com/perfectbuii/gen-go-template/cmd/gen-layer/models"
 	"github.com/perfectbuii/gen-go-template/cmd/gen-layer/utils"
-	"github.com/perfectbuii/gen-go-template/features"
+	features "github.com/perfectbuii/gen-go-template/integration_test"
 	"github.com/perfectbuii/gen-go-template/utils/pathutils"
 
 	"github.com/iancoleman/strcase"
@@ -42,7 +42,6 @@ func Run() {
 	name := Steps[0].Val
 	layer := Steps[1].Val
 	method := Steps[2].Val
-	database := Steps[3].Val
 
 	baseDir, _ := os.Getwd()
 	_, filename, _, ok := runtime.Caller(0)
@@ -59,13 +58,9 @@ func Run() {
 		layers = []string{layer}
 	}
 
-	if database != "" {
-		layers = append(layers, database)
-	}
-
 	// get methods
 	var methods []string
-	if method == Methods[0] {
+	if method == Methods[0] || layer == Layers[3] {
 		methods = Methods
 	} else {
 		methods = []string{method}
@@ -98,36 +93,35 @@ func Run() {
 			}
 			panic(err)
 		}
-		p := path.Join(pkgDir, "..", "templates", l, "default.tpl") // root path
-		paths := []string{p}
-		if l != Layers[3] {
-			for _, m := range methods {
-				if m == Methods[0] {
-					continue
-				}
-				p := path.Join(pkgDir, "..", "templates", l, m+".tpl")
-				paths = append(paths, p)
+		paths := []string{
+			path.Join(pkgDir, "..", "templates", l, "default.tpl"), // root path
+		}
+		p := path.Join(pkgDir, "..", "templates", l, "default.tpl")
+		paths = append(paths, p)
+		for _, m := range methods {
+			if m == Methods[0] {
+				continue
 			}
+			p := path.Join(pkgDir, "..", "templates", l, m+".tpl")
+			paths = append(paths, p)
 		}
 		tmpl := template.
 			Must(template.
 				ParseFiles(paths...))
+
 		if err := tmpl.ExecuteTemplate(file, "default", templateModel); err != nil {
 			panic(err)
 		}
-		if l != Layers[3] {
-			for _, m := range methods {
-				if m == Methods[0] {
-					continue
-				}
-				if err := tmpl.ExecuteTemplate(file, m, templateModel); err != nil {
-					panic(err)
-				}
+		for _, m := range methods {
+			if m == Methods[0] {
+				continue
+			}
+			if err := tmpl.ExecuteTemplate(file, m, templateModel); err != nil {
+				panic(err)
 			}
 		}
 	}
 	if slices.Contains(layers, Layers[4]) {
-
 		stepMap := make(map[string]bool)
 		suite := &features.Suite{}
 		definedSteps := suite.GetSteps()
@@ -141,7 +135,7 @@ func Run() {
 
 			// generate features file
 			p := path.Join(pkgDir, "..", "templates", Layers[4], m+".tpl")
-			featureFilePath := path.Join(baseDir, "features", name, fmt.Sprintf("%s_%s.feature", m, strcase.ToKebab(name)))
+			featureFilePath := path.Join(baseDir, "integration_test", "features", fmt.Sprintf("%s_%s.feature", m, strcase.ToKebab(name)))
 			file, err := os.Create(featureFilePath)
 			if err != nil {
 				if os.IsExist(err) {
@@ -158,7 +152,7 @@ func Run() {
 
 			// generate go file
 			p = path.Join(pkgDir, "..", "templates", "godog", m+".tpl")
-			filePath := path.Join(baseDir, "features", fmt.Sprintf("%s_%s.go", m, strcase.ToKebab(name)))
+			filePath := path.Join(baseDir, "integration_test", fmt.Sprintf("%s_%s.go", m, strcase.ToKebab(name)))
 			file, err = os.Create(filePath)
 			if err != nil {
 				if os.IsExist(err) {
@@ -174,7 +168,7 @@ func Run() {
 			}
 
 			steps := utils.GetStepsContent(featureFilePath, stepMap)
-			bddFilePath := path.Join(baseDir, "features", "bdd.go")
+			bddFilePath := path.Join(baseDir, "integration_test", "bdd_setup.go")
 			b, err := os.ReadFile(bddFilePath)
 			if err != nil {
 				panic(err)

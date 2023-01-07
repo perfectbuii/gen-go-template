@@ -21,5 +21,5 @@ Feature: Search hub
         And hub must be created
         Then user search hub
         Then returns "OK" status code
-        And our system must return result correctly
+        And our system must return hub correctly
         

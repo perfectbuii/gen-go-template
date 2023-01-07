@@ -5,15 +5,23 @@ import (
 	"context"
 
 	"{{.Module}}/internal/models"
-	"{{.Module}}/internal/repositories"
 )
 
 type {{.PascalCase}}Repository interface {
-	{{if .IsCreate}} Create(ctx context.Context, {{.CamelCase}} *models.{{.PascalCase}}, opts ...repositories.Options) error {{end}}
-	{{if .IsRetrieve}} GetByID(ctx context.Context, id string, opts ...repositories.Options) (*models.{{.PascalCase}}, error) {{end}}
-	{{if .IsList}} GetList(ctx context.Context, offset, limit int, opts ...repositories.Options) ([]*models.{{.PascalCase}}, error) {{end}}
-	{{if .IsUpdate}} Update(ctx context.Context, id string, {{.CamelCase}} *models.{{.PascalCase}}, opts ...repositories.Options) error {{end}}
-	{{if .IsDelete}} Delete(ctx context.Context, id string, opts ...repositories.Options) error {{end}}
+	Create(ctx context.Context, {{.CamelCase}} *models.{{.PascalCase}}) error
+	GetByID(ctx context.Context, id string) (*models.{{.PascalCase}}, error)
+	GetList(ctx context.Context, offset, limit int) ([]*models.{{.PascalCase}}, error)
+	Update(ctx context.Context, id string, {{.CamelCase}} *models.{{.PascalCase}}) error
+	Delete(ctx context.Context, id string) error
 }
 
+type {{.CamelCase}}Repository struct {
+	db *models.Queries
+}
+
+func New{{.PascalCase}}Repository(q models.DBTX) {{.PascalCase}}Repository {
+	return &{{.CamelCase}}Repository{
+		db: models.New(q),
+	}
+}
 {{end}}

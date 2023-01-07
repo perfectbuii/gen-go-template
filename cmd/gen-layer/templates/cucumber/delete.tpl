@@ -18,7 +18,7 @@
     Scenario: delete {{.CamelCase}}
         When user delete {{.CamelCase}}
         Then returns "OK" status code
-        And {{.CamelCase}} have been deleted correctly
+        And {{.CamelCase}} has been deleted correctly
 
 	# delete {{.CamelCase}} again
     Scenario: delete {{.CamelCase}} again

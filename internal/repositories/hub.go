@@ -16,18 +16,17 @@ type HubRepository interface {
 }
 
 type hubRepository struct {
-	db models.DBTX
+	db *models.Queries
 }
 
 func NewHubRepository(db models.DBTX) HubRepository {
 	return &hubRepository{
-		db,
+		db: models.New(db),
 	}
 }
 
 func (r *hubRepository) Create(ctx context.Context, hub *models.Hub) error {
-	q := models.New(r.db)
-	if _, err := q.CreateHub(ctx, models.CreateHubParams{
+	if _, err := r.db.CreateHub(ctx, models.CreateHubParams{
 		ID:         hub.ID,
 		Name:       hub.Name,
 		LocationID: hub.LocationID,
@@ -50,8 +49,7 @@ func (u *hubRepository) GetList(ctx context.Context, offset, limit int) ([]*mode
 }
 
 func (r *hubRepository) GetByID(ctx context.Context, id string) (*models.Hub, error) {
-	q := models.New(r.db)
-	hub, err := q.FindHubByID(ctx, pgtype.Text{
+	hub, err := r.db.FindHubByID(ctx, pgtype.Text{
 		String: id,
 		Status: pgtype.Present,
 	})

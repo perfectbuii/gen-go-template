@@ -63,18 +63,4 @@ var Steps = []*models.CliStep{
 			},
 		},
 	},
-
-	{
-		Name: "step 4",
-		Type: models.SELECT,
-		Select: promptui.Select{
-			Label: "Choose database using",
-			Items: Databases,
-			Templates: &promptui.SelectTemplates{
-				Active:   fmt.Sprintf("%s {{ . | underline | green }}", promptui.IconSelect),
-				Label:    fmt.Sprintf("%s {{ . | blue }}: ", promptui.IconInitial),
-				Selected: fmt.Sprintf("%s {{ . | white }}", promptui.IconGood+promptui.Styler(promptui.FGGreen)(" Method name: ")),
-			},
-		},
-	},
 }

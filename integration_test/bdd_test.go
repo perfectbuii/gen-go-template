@@ -12,7 +12,7 @@ func TestFeatures(t *testing.T) {
 		Options: &godog.Options{
 			Format:   "pretty",
 			TestingT: t, // Testing instance that will run subtests.
-			Paths:    []string{"hub"},
+			Paths:    []string{"features"},
 		},
 	}
 
