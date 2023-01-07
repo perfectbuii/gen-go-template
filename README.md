@@ -271,7 +271,7 @@
 
 ## Installation:
 
-Make sure you have Go installed ([download](https://golang.org/dl/)). Version `1.19` or higher is required.
+Make sure you have Go installed ([download](https://golang.org/dl/)).
 
 Install make for start the server.
 
