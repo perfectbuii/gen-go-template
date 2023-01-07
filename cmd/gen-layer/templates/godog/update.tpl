@@ -1,13 +1,18 @@
 {{define "update"}}
 package features
 
-import "github.com/cucumber/godog"
+import (
+       "context"
+       "github.com/cucumber/godog"
+)
 
-func (s*Suite) updated{{.PascalCase}}SetAsExpected() error {
-       return godog.ErrPending
+func (s*Suite) updated{{.PascalCase}}SetAsExpected(ctx context.Context) (context.Context, error) {
+       stepState := StepStateFromContext(ctx)
+       return StepStateToContext(ctx, stepState), godog.ErrPending
 }
 
-func (s*Suite) userUpdate{{.PascalCase}}() error {
-       return godog.ErrPending
+func (s*Suite) userUpdate{{.PascalCase}}(ctx context.Context) (context.Context, error) {
+       stepState := StepStateFromContext(ctx)
+       return StepStateToContext(ctx, stepState), godog.ErrPending
 }
 {{end}}

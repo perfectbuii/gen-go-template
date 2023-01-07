@@ -141,7 +141,7 @@ func Run() {
 
 			// generate features file
 			p := path.Join(pkgDir, "..", "templates", Layers[4], m+".tpl")
-			featureFilePath := path.Join(baseDir, "features", fmt.Sprintf("%s_%s.feature", m, strcase.ToKebab(name)))
+			featureFilePath := path.Join(baseDir, "features", name, fmt.Sprintf("%s_%s.feature", m, strcase.ToKebab(name)))
 			file, err := os.Create(featureFilePath)
 			if err != nil {
 				if os.IsExist(err) {

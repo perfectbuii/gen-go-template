@@ -3,6 +3,7 @@ package repositories
 import (
 	"context"
 
+	"github.com/jackc/pgtype"
 	"github.com/perfectbuii/gen-go-template/internal/models"
 )
 
@@ -48,6 +49,15 @@ func (u *hubRepository) GetList(ctx context.Context, offset, limit int) ([]*mode
 	return nil, nil
 }
 
-func (u *hubRepository) GetByID(ctx context.Context, id string) (*models.Hub, error) {
-	return nil, nil
+func (r *hubRepository) GetByID(ctx context.Context, id string) (*models.Hub, error) {
+	q := models.New(r.db)
+	hub, err := q.FindHubByID(ctx, pgtype.Text{
+		String: id,
+		Status: pgtype.Present,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return hub, nil
 }

@@ -32,7 +32,7 @@ services:
     container_name: postgres_container
     build:
       context: ../
-      dockerfile: ./postgres.Dockerfile
+      dockerfile: ./developments/postgres.Dockerfile
     environment:
       PGDATA: /data/postgres
       POSTGRES_DB: postgres
@@ -44,15 +44,6 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-  
-  bdd_test:
-    container_name: bdd_container
-    build:
-      context: ../
-      dockerfile: ./developments/bdd_test.Dockerfile
-    volumes:
-      - "../:/app/"
-    command: ["godog","run"]
 
   migrate:
     image: migrate/migrate
@@ -62,6 +53,14 @@ services:
       - postgres
     command: [ "-path","/migrations", "-database", "postgres://postgres:postgres@postgres:5432/postgres?sslmode=disable", "up"]
 
+  bdd_test:
+    container_name: bdd_container
+    build:
+      context: ../
+      dockerfile: ./developments/bdd_test.Dockerfile
+    volumes:
+      - "../features:/app/"
+    command: ["godog","run"] 
 networks:
   postgres:
     driver: bridge

@@ -1,13 +1,17 @@
 {{define "create"}}
 package features
 
-import "github.com/cucumber/godog"
+import (
+       "context"
+       "github.com/cucumber/godog"
+)
 
-func (s*Suite) {{.CamelCase}}MustBeCreated() error {
-       return godog.ErrPending
+func (s*Suite) {{.CamelCase}}MustBeCreated(ctx context.Context) (context.Context, error) {
+       stepState := StepStateFromContext(ctx)
+       return StepStateToContext(ctx, stepState), godog.ErrPending
 }
 
-func (s*Suite) userCreate{{.PascalCase}}() error {
-       return godog.ErrPending
-}
+func (s*Suite) userCreate{{.PascalCase}}(ctx context.Context) (context.Context, error) {
+       stepState := StepStateFromContext(ctx)
+       return StepStateToContext(ctx, stepState), godog.ErrPending}
 {{end}}

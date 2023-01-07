@@ -8,9 +8,8 @@ require (
 	github.com/bxcodec/faker/v3 v3.8.1
 	github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be
 	github.com/cucumber/gherkin-go/v19 v19.0.3
-	github.com/cucumber/godog v0.12.6
+	github.com/cucumber/godog v0.12.0
 	github.com/cucumber/messages-go/v16 v16.0.1
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/envoyproxy/protoc-gen-validate v0.9.1
 	github.com/gogo/protobuf v1.3.2
 	github.com/golang/protobuf v1.5.2
@@ -62,6 +61,6 @@ require (
 	golang.org/x/crypto v0.4.0 // indirect
 	golang.org/x/net v0.3.0 // indirect
 	golang.org/x/sync v0.0.0-20220923202941-7f9b1623fab7 // indirect
-	golang.org/x/sys v0.3.0 // indirect
+	golang.org/x/sys v0.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

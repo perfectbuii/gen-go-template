@@ -13,7 +13,7 @@ ENV PGROONGA_VERSION=2.4.2 \
     GROONGA_VERSION=12.1.0
 
 WORKDIR /
-COPY ./groonga-build.sh /
+COPY ./developments/groonga-build.sh /
 RUN \
     /groonga-build.sh ${PGROONGA_VERSION} ${GROONGA_VERSION} && \
     rm -f groonga-build.sh

@@ -7,7 +7,7 @@ COMPOSE_FILE := ./developments/docker-compose.yml
 # 	@go build -i -v $(PKG)/cmd/server
 run:
 	go run cmd/server/main.go
-test:
+unit-test:
 	go test ./...
 install:
 	@go install ./cmd/server/.
@@ -16,18 +16,22 @@ gen-sql:
 gen-proto:
 	docker compose -f ${COMPOSE_FILE} up generate_pb_go
 start-postgres:
-	docker compose -f ${COMPOSE_FILE} up postgres -d
+	docker compose -f ${COMPOSE_FILE} up postgres --build
 migrate:
-	docker compose -f ${COMPOSE_FILE} up migrate
+	docker compose -f ${COMPOSE_FILE} up migrate  --build
 gen-layer:
 	go run ./cmd/gen-layer/.
 	go fmt ./internal
 gen-mock:
 	docker compose -f ${COMPOSE_FILE} up generate_mock
 bdd-test:
-	docker compose -f ${COMPOSE_FILE} up bdd_test --build
+	go test -v ./features
 build:
 	@echo "building..."
 	go build ./cmd/srv/.
+start-project:
+	docker compose -f ${COMPOSE_FILE} up postgres --detach &
+	docker compose -f ${COMPOSE_FILE} up migrate  --build  &
+	go run cmd/server/main.go
 #  --gofullmethods_out=. \
 # 	 --gofullmethods_opt=paths=source_relative

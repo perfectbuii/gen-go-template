@@ -1,17 +1,18 @@
 {{define "list"}}
 package features
 
-import "github.com/cucumber/godog"
+import (
+       "context"
+       "github.com/cucumber/godog"
+)
 
-func (s*Suite) returnsStatusCode(arg1 string) error {
-       return godog.ErrPending
+func (s*Suite) userList{{.PascalCase}}(ctx context.Context) (context.Context, error) {
+       stepState := StepStateFromContext(ctx)
+       return StepStateToContext(ctx, stepState), godog.ErrPending
 }
 
-func (s*Suite) userList{{.PascalCase}}() error {
-       return godog.ErrPending
-}
-
-func (s*Suite) ourSystemMustReturnResultCorrectly() error {
-    return godog.ErrPending
+func (s*Suite) ourSystemMustReturnResultCorrectly(ctx context.Context) (context.Context, error) {
+       stepState := StepStateFromContext(ctx)
+       return StepStateToContext(ctx, stepState), godog.ErrPending
 }
 {{end}}
