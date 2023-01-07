@@ -61,8 +61,6 @@ func (s *Suite) GetSteps() map[string]interface{} {
 		`^hub must be created$`:                  s.hubMustBeCreated,
 		`^user search hub$`:                      s.userSearchHub,
 		`^our system must return hub correctly$`: s.ourSystemMustReturnHubCorrectly,
-		`^user create team$`:                     s.userCreateTeam,
-		`^team must be created$`:                 s.teamMustBeCreated,
 
 		/*generate_key*/
 	}
